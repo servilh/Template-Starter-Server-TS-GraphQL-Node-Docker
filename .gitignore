@@ -1,3 +1,7 @@
 node_modules
 build
 data
+.vscode/dryrun.log
+.vscode/configurationCache.log
+.vscode/targets.log
+.vscode/targets.log
