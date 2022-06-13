@@ -2,7 +2,7 @@
 import express, { Request, Response } from "express";
 import { ObjectId } from "mongodb";
 import { collections } from "../services/database.service";
-import Game from "../models/game";
+import Game from "../../../common/src/models/game";
 // Global Config
 export const gamesRouter = express.Router();
 
@@ -12,7 +12,7 @@ gamesRouter.get("/", async (_req: Request, res: Response) => {
     try {
         if(collections.games) {
             const games = await collections.games.find({}).toArray();
-
+            
             res.status(200).send(games);
         }
         
