@@ -3,6 +3,7 @@ import express, { Request, Response } from "express";
 import { ObjectId } from "mongodb";
 import { collections } from "../services/database.service";
 import Game from "../../../common/src/models/game";
+import ApiResult from "../../../common/src/models/apiResult";
 // Global Config
 export const gamesRouter = express.Router();
 
@@ -35,7 +36,7 @@ gamesRouter.get("/:id", async (req: Request, res: Response) => {
         }
         
     } catch (error) {
-        res.status(404).send(`Unable to find matching document with id: ${req.params.id}`);
+        res.status(404).send(new ApiResult( `Unable to find matching document with id: ${req.params.id}` ));
     }
 });
 // POST
@@ -46,8 +47,8 @@ gamesRouter.post("/", async (req: Request, res: Response) => {
             const result = await collections.games.insertOne(newGame);
 
             result
-                ? res.status(201).send(`Successfully created a new game with id ${result.insertedId}`)
-                : res.status(500).send("Failed to create a new game.");
+                ? res.status(201).send(new ApiResult( `Successfully created a new game with id ${result.insertedId}`))
+                : res.status(500).send(new ApiResult( "Failed to create a new game." ));
         }        
     } catch (error: any) {
         console.error(error);
@@ -64,8 +65,8 @@ gamesRouter.put("/:id", async (req: Request, res: Response) => {
         if(collections.games) {
             const result = await collections.games.updateOne(query, { $set: updatedGame });
             result
-            ? res.status(200).send(`Successfully updated game with id ${id}`)
-            : res.status(304).send(`Game with id: ${id} not updated`);
+            ? res.status(200).send(new ApiResult( `Successfully updated game with id ${id}` ))
+            : res.status(304).send(new ApiResult( `Game with id: ${id} not updated` ));
         }
         
        
@@ -84,11 +85,11 @@ gamesRouter.delete("/:id", async (req: Request, res: Response) => {
             const result = await collections.games.deleteOne(query);
 
             if (result && result.deletedCount) {
-                res.status(202).send(`Successfully removed game with id ${id}`);
+                res.status(202).send(new ApiResult( `Successfully removed game with id ${id}` ));
             } else if (!result) {
-                res.status(400).send(`Failed to remove game with id ${id}`);
+                res.status(400).send(new ApiResult( `Failed to remove game with id ${id}` ));
             } else if (!result.deletedCount) {
-                res.status(404).send(`Game with id ${id} does not exist`);
+                res.status(404).send(new ApiResult( `Game with id ${id} does not exist`));
             }
         }
         
