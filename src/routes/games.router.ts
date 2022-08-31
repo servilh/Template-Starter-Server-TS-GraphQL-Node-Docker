@@ -63,7 +63,11 @@ gamesRouter.put("/:id", async (req: Request, res: Response) => {
         const updatedGame: Game = req.body as Game;
         const query = { _id: new ObjectId(id) };
         if(collections.games) {
-            const result = await collections.games.updateOne(query, { $set: updatedGame });
+            const result = await collections.games.updateOne(query, { $set: { 
+                name: updatedGame.name,
+                category: updatedGame.category,
+                price: updatedGame.price
+            } });
             result
             ? res.status(200).send(new ApiResult( `Successfully updated game with id ${id}` ))
             : res.status(304).send(new ApiResult( `Game with id: ${id} not updated` ));
