@@ -10,6 +10,7 @@ import { GameResolver } from "../graphql/resolvers/gamesResolver";
 export async function startGraphQL(app: Express) {
     //GRAPHQL: in route path of express /graphql
     try {
+        
         const server = new ApolloServer({
             schema: await buildSchema({
                 resolvers: [PingResolver, GameResolver],
@@ -17,8 +18,11 @@ export async function startGraphQL(app: Express) {
             }),
             context: ({ req, res }) => ({ req, res })
         });
+
         await server.start();
+
         server.applyMiddleware({ app, path: '/graphql' })
+
     } catch (ex) {
         throw new Error("GRAPHQL starting FAILED: " + ex);
     }
