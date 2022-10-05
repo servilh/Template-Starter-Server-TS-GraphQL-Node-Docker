@@ -21,9 +21,6 @@ async function main() {
             // Website you wish to allow to connect
             res.setHeader('Access-Control-Allow-Origin', '*');
 
-            // Website for Jasmine Testing
-            //res.setHeader('Access-Control-Allow-Origin', 'http://localhost:9876');
-
             // Request methods you wish to allow
             res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
