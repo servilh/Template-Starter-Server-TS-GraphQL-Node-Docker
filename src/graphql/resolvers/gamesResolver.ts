@@ -66,7 +66,7 @@ export class GameResolver {
         const query = { _id: new ObjectId(id) };
         if (collections.games) {
             const result = await collections.games.deleteOne(query);
-            return id;        }
-
+            return id;       
+        }
     }
 }
