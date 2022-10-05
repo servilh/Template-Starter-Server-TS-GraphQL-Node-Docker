@@ -44,7 +44,7 @@ export class GameResolver {
     async upsertGame(
         @Arg("game") game: GameInput
     ) {
-       
+
         if (game.id) {
             const query = { _id: new ObjectId(game.id) };
             const result = await collections.games?.updateOne(query, {
@@ -59,5 +59,14 @@ export class GameResolver {
             const result = await collections.games?.insertOne(game);
             return result?.insertedId;
         }
+    }
+
+    @Mutation(() => String)
+    async deleteGame(@Arg("id") id: string) {
+        const query = { _id: new ObjectId(id) };
+        if (collections.games) {
+            const result = await collections.games.deleteOne(query);
+            return id;        }
+
     }
 }
